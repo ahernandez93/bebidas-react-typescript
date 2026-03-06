@@ -13,6 +13,7 @@ export default function Header() {
     const fetchCategories = useAppStore((state) => state.fetchCategories)
     const categories = useAppStore((state) => state.categories)
     const searchRecipes = useAppStore((state) => state.searchRecipes)
+    const showNotification = useAppStore((state) => state.showNotification)
 
     useEffect(() => {
         fetchCategories();
@@ -28,9 +29,11 @@ export default function Header() {
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // TODO: Validar
         if (Object.values(searchFilters).includes('')) {
-            alert('Por favor, completa todos los campos de búsqueda.');
+            showNotification({
+                text: 'Por favor, completa todos los campos de búsqueda.',
+                error: true
+            });
             return;
         }
 
